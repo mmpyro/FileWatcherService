@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FileNotifierSpecyfication
+namespace FileNotifier
 {
     public class ObserveFileDto
     {

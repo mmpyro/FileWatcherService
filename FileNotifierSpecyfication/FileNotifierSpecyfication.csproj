@@ -45,10 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileNotifierManager.cs" />
     <Compile Include="FileNotifierServiceSpecification.cs" />
-    <Compile Include="IFileNotifier.cs" />
-    <Compile Include="ObserveFileDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

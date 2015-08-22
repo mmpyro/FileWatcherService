@@ -1,4 +1,4 @@
-﻿namespace FileNotifierSpecyfication
+﻿namespace FileNotifier
 {
     public interface IFileNotifier
     {
