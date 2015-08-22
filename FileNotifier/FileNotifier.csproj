@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="FileNotifierManager.cs" />
     <Compile Include="FileObserver.cs" />
+    <Compile Include="FileWatchDog.cs" />
     <Compile Include="IFileNotifier.cs" />
     <Compile Include="IFileNotifierManager.cs" />
     <Compile Include="IFileObserver.cs" />

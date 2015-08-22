@@ -4,13 +4,25 @@ namespace FileNotifier
 {
     public class ObserveFileDto
     {
-        public string Path { get; set; }
+        public ObserveFileDto(string fileDirectoryPath, bool withSubDirectories = true)
+        {
+            DirectoryPath = fileDirectoryPath;
+            WithSubDirectories = withSubDirectories;
+            Filter = string.Empty;
+        }
+
+        public ObserveFileDto()
+        {
+            
+        }
+
+        public string DirectoryPath { get; set; }
         public string Filter { get; set; }
         public bool WithSubDirectories { get; set; }
 
         public override int GetHashCode()
         {
-            return Path.GetHashCode();
+            return DirectoryPath.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -18,7 +30,7 @@ namespace FileNotifier
             var dto = obj as ObserveFileDto;
             if (obj != null)
             {
-                return dto.Path.Equals(Path, StringComparison.OrdinalIgnoreCase);
+                return dto.DirectoryPath.Equals(DirectoryPath, StringComparison.OrdinalIgnoreCase);
             }
             return false;
         }

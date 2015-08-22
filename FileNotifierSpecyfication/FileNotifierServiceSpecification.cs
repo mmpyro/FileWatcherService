@@ -5,6 +5,7 @@ using NUnit.Framework;
 
 namespace FileNotifierSpecyfication
 {
+    [TestFixture]
     public class FileNotifierServiceSpecification
     {
         [TestFixtureSetUp]
@@ -21,7 +22,7 @@ namespace FileNotifierSpecyfication
             var fileNotifierManager = new FileNotifierManager(mockNotifier);
             var fileToObserve = new ObserveFileDto()
             {
-                Path = @"D:\data.xml",
+                DirectoryPath = @"D:\data.xml",
                 Filter = string.Empty,
                 WithSubDirectories = true
             };
@@ -39,7 +40,7 @@ namespace FileNotifierSpecyfication
             var fileNotifierManager = new FileNotifierManager(mockNotifier);
             var fileToObserve = new ObserveFileDto()
             {
-                Path = @"D:\data.xml",
+                DirectoryPath = @"D:\data.xml",
                 Filter = string.Empty,
                 WithSubDirectories = true
             };
@@ -58,7 +59,7 @@ namespace FileNotifierSpecyfication
             const string path = @"D:\data.xml";
             var fileToObserve = new ObserveFileDto()
             {
-                Path = path,
+                DirectoryPath = path,
                 Filter = string.Empty,
                 WithSubDirectories = true
             };

@@ -38,7 +38,7 @@ namespace FileNotifier
             try
             {
                 var fileDto =
-                    _observedFiles.Single(t => t.Key.Path.Equals(filePath, StringComparison.OrdinalIgnoreCase)).Key;
+                    _observedFiles.Single(t => t.Key.DirectoryPath.Equals(filePath, StringComparison.OrdinalIgnoreCase)).Key;
                 _observedFiles.Remove(fileDto);
             }
             catch
