@@ -4,16 +4,20 @@ namespace FileNotifier
 {
     public class ObserveFileDto
     {
-        public ObserveFileDto(string fileDirectoryPath, bool withSubDirectories = true)
-        {
-            DirectoryPath = fileDirectoryPath;
-            WithSubDirectories = withSubDirectories;
-            Filter = string.Empty;
-        }
-
-        public ObserveFileDto()
+        public ObserveFileDto() : this("","*.*",true)
         {
             
+        }
+
+        public ObserveFileDto(string fileDirectoryPath, bool withSubDirectories = true) : this(fileDirectoryPath, "*.*", withSubDirectories)
+        {
+        }
+
+        public ObserveFileDto(string directoryPath, string filter, bool withSubDirectories = true)
+        {
+            DirectoryPath = directoryPath;
+            Filter = filter;
+            WithSubDirectories = withSubDirectories;
         }
 
         public string DirectoryPath { get; set; }

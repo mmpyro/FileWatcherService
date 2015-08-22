@@ -35,7 +35,7 @@ namespace FileNotifier
             {
                 Path = _dto.DirectoryPath,
                 Filter = _dto.Filter,
-                NotifyFilter = NotifyFilters.FileName | NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.CreationTime | NotifyFilters.DirectoryName
+                NotifyFilter = NotifyFilters.CreationTime|NotifyFilters.FileName | NotifyFilters.LastAccess | NotifyFilters.LastWrite | NotifyFilters.DirectoryName
             };
 
             _fileSystemWatcher.Created += FileSystemWatcherOnChanged;
