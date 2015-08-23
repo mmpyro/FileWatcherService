@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using System.IO;
 using System.ServiceModel;
 using FileNotifier;
 using FileWatcherService;
@@ -18,7 +17,7 @@ namespace ConsoleWatcher
         public void LoadPlugins()
         {
             var catalog = new AggregateCatalog();
-            catalog.Catalogs.Add(new DirectoryCatalog(Path.Combine(Directory.GetCurrentDirectory(), "Plugins")));
+            catalog.Catalogs.Add(new DirectoryCatalog(@"D:\Projects\Codes\FileNotifier\ConsoleWatcher\bin\Debug\Plugins\"));
             var container = new CompositionContainer(catalog);
             container.ComposeParts(this);
         }
