@@ -70,5 +70,17 @@ namespace FileNotifierSpecyfication
             //Then
             Assert.AreEqual(fileNotifierManager.PerformFileList().Count, 0);
         }
+
+        [Test]
+        public void RemoveFromObservableListException_Test()
+        {
+            //Given
+            var mockNotifier = Substitute.For<IFileNotifier>();
+            var fileNotifierManager = new FileNotifierManager(mockNotifier);
+            const string path = @"D:\data.xml";
+
+            //Then
+            Assert.Throws<InvalidOperationException>(() => fileNotifierManager.Remove(path));
+        }
     }
 }
