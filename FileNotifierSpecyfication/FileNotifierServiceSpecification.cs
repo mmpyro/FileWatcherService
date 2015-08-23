@@ -1,5 +1,6 @@
 ﻿using System;
 using FileNotifier;
+using FileWatcherService;
 using NSubstitute;
 using NUnit.Framework;
 

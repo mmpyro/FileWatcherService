@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FileNotifier
+namespace FileWatcherService
 {
     public class ObserveFileDto
     {

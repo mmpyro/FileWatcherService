@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using FileNotifier;
+using FileWatcherService;
 using NUnit.Framework;
 
 namespace FileNotifierSpecyfication
@@ -34,7 +35,7 @@ namespace FileNotifierSpecyfication
         [TestFixtureSetUp]
         public void Init()
         {
-            FileObserver.CreateFunction = (dto, notifier) => new FileWatchDog(dto, notifier);
+            FileObserver.CreateFunction = (dto, notifier) => new FileWatchDog(dto,notifier );
             if (!Directory.Exists(SubDirPath))
             {
                 Directory.CreateDirectory(SubDirPath);
@@ -143,6 +144,28 @@ namespace FileNotifierSpecyfication
             fileNotifierManager.Set(fileToObserve);
             const string testfile = "testfile.txt";
             File.Create(Path.Combine(SubDirPath, testfile)).Close();
+            //Then
+            Assert.That(() => fileNotifier.CountInvoked, Is.EqualTo(1).After(Delay));
+        }
+
+        [Test]
+        [Category("Box")]
+        public void RemoveFromObservableList_Test()
+        {
+            //Given
+            var fileNotifier = new FakeNotifier();
+            var fileToObserve = new ObserveFileDto()
+            {
+                DirectoryPath = @"D:\test",
+                Filter = "*.*",
+                WithSubDirectories = false
+            };
+            var fileNotifierManager = new FileNotifierManager(fileNotifier);
+            //When
+            fileNotifierManager.Set(fileToObserve);
+            File.Create(FilePath).Close();
+            fileNotifierManager.Remove(fileToObserve.DirectoryPath);
+            DeleteIfExist(FilePath);
             //Then
             Assert.That(() => fileNotifier.CountInvoked, Is.EqualTo(1).After(Delay));
         }

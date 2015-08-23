@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FileNotifier;
 
-namespace FileNotifier
+namespace FileWatcherService
 {
     public class FileNotifierManager : IFileNotifierManager
     {
-        private readonly IFileNotifier _fileNotifier;
+        private readonly IFileNotifier[] _fileNotifier;
 
-        public FileNotifierManager(IFileNotifier fileNotifier)
+        public FileNotifierManager(params IFileNotifier[] fileNotifier)
         {
             _fileNotifier = fileNotifier;
             _observedFiles = new Dictionary<ObserveFileDto, IFileObserver>();
@@ -39,6 +40,8 @@ namespace FileNotifier
             {
                 var fileDto =
                     _observedFiles.Single(t => t.Key.DirectoryPath.Equals(filePath, StringComparison.OrdinalIgnoreCase)).Key;
+                var adapter = _observedFiles[fileDto];
+                adapter.Stop();
                 _observedFiles.Remove(fileDto);
             }
             catch

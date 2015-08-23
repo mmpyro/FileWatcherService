@@ -1,31 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Security.Permissions;
 using FileNotifier;
+using FileWatcherService;
 
-namespace FileNotifier
+namespace FileWatcherService
 {
     public class FileWatchDog : IFileObserver
     {
         private readonly ObserveFileDto _dto;
-        private readonly IFileNotifier _notifier;
+        private readonly List<IFileNotifier> _notifier;
         private  FileSystemWatcher _fileSystemWatcher;
 
-        public FileWatchDog(ObserveFileDto dto, IFileNotifier notifier)
+        public FileWatchDog(ObserveFileDto dto, params IFileNotifier[] notifier)
         {
             _dto = dto;
-            _notifier = notifier;
+            _notifier = new List<IFileNotifier>(notifier);
         }
 
         private void FileSystemWatcherOnRenamed(object sender, RenamedEventArgs renamedEventArgs)
         {
-            _notifier.OnRename(renamedEventArgs);
+            _notifier.ForEach(t => t.OnRename(renamedEventArgs));
         }
 
 
         private void FileSystemWatcherOnChanged(object sender, FileSystemEventArgs fileSystemEventArgs)
         {
-            _notifier.OnCreated(fileSystemEventArgs);
+            _notifier.ForEach(t => t.OnCreated(fileSystemEventArgs));
         }
 
         [PermissionSet(SecurityAction.Demand, Name = "FullTrust")]
@@ -44,6 +46,11 @@ namespace FileNotifier
             _fileSystemWatcher.Deleted += FileSystemWatcherOnChanged;
 
             _fileSystemWatcher.EnableRaisingEvents = true;
+        }
+
+        public void Stop()
+        {
+            _fileSystemWatcher.EnableRaisingEvents = false;
         }
     }
 }

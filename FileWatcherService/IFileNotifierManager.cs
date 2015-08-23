@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FileNotifier
+namespace FileWatcherService
 {
     public interface IFileNotifierManager
     {
