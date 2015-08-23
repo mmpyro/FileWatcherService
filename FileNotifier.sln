@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileNotifierSpecyfication",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileWatcherService", "FileWatcherService\FileWatcherService.csproj", "{15B3E0D2-6217-493A-A690-158C497F5318}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleWatcher", "ConsoleWatcher\ConsoleWatcher.csproj", "{60044363-B787-4667-A33E-5BB1D7B7A704}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextFileNotifierPlugin", "TextFileNotifierPlugin\TextFileNotifierPlugin.csproj", "{EF43D11F-F554-48F8-86EF-11D22705DFF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +29,14 @@ Global
 		{15B3E0D2-6217-493A-A690-158C497F5318}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15B3E0D2-6217-493A-A690-158C497F5318}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15B3E0D2-6217-493A-A690-158C497F5318}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60044363-B787-4667-A33E-5BB1D7B7A704}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60044363-B787-4667-A33E-5BB1D7B7A704}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60044363-B787-4667-A33E-5BB1D7B7A704}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60044363-B787-4667-A33E-5BB1D7B7A704}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF43D11F-F554-48F8-86EF-11D22705DFF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF43D11F-F554-48F8-86EF-11D22705DFF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF43D11F-F554-48F8-86EF-11D22705DFF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF43D11F-F554-48F8-86EF-11D22705DFF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
