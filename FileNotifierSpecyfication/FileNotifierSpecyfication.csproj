@@ -57,9 +57,9 @@
       <Project>{dc041f0a-cd01-47b3-b511-8e979a581bdb}</Project>
       <Name>FileNotifier</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FileWatcherService\FileWatcherService.csproj">
+    <ProjectReference Include="..\FileWatcherService\FileWatcher.csproj">
       <Project>{15b3e0d2-6217-493a-a690-158c497f5318}</Project>
-      <Name>FileWatcherService</Name>
+      <Name>FileWatcher</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

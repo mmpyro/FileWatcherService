@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel;
 using FileNotifier;
 
 namespace FileWatcherService
 {
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class FileNotifierManager : IFileNotifierManager
     {
         private readonly IFileNotifier[] _fileNotifier;

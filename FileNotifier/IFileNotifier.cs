@@ -7,4 +7,6 @@ namespace FileNotifier
         void OnCreated(FileSystemEventArgs arg);
         void OnRename(RenamedEventArgs arg);
     }
+
+
 }

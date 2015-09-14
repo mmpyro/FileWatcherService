@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>FileNotifier</title>
+    <script src="Scripts/jquery-1.9.0.min.js"></script>
+    <script src="Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="http://localhost:8080/signalr/hubs"></script>
+    <link rel="stylesheet" href="Content/bootstrap.min.css"/>
+    <script type="text/javascript">
+        $(function() {
+            $.connection.hub.url = "http://localhost:8080/signalr";
+            var notifier = $.connection.fileNotifierHub;
+
+            notifier.client.notify = function(message) {
+                $('#list').append('<li class="list-group-item">'+message+'</li>');
+            };
+
+            notifier.client.getObservedPaths = function(data) {
+                console.log(data);
+                var table = '<table id="paths" class="table"><tr><th>Directory Path</th></tr></table>';
+                $('#tableDocker').html(table);
+                for (i = 0; i < data.length; i++) {
+                    var value = data[i].DirectoryPath;
+                    console.log(value);
+                    $('#paths').append('<tr><td>'+value+'</td></tr>');
+                }
+            };
+
+            $('#btn1').click(function() {
+                notifier.server.getObservedPaths();
+            });
+
+            $.connection.hub.start().done(function () {
+                console.log("connected");
+                $('#status').html('connected');
+            });
+        });
+    </script>
+</head>
+    <body class="container">
+        <strong>Status: </strong><span id="status"></span>
+        <div id="tableDocker"></div> 
+        <button class="btn-primary" id="btn1">GetPaths</button>
+        <ul class="list-group" id="list"></ul>
+    </body>
+</html>

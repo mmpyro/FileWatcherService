@@ -3,7 +3,6 @@ using System.Runtime.Serialization;
 
 namespace FileWatcherService
 {
-    [DataContract]
     public class ObserveFileDto
     {
         public ObserveFileDto() : this("","*.*",true)
@@ -22,11 +21,8 @@ namespace FileWatcherService
             WithSubDirectories = withSubDirectories;
         }
 
-        [DataMember]
         public string DirectoryPath { get; set; }
-        [DataMember]
         public string Filter { get; set; }
-        [DataMember]
         public bool WithSubDirectories { get; set; }
 
         public override int GetHashCode()

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FileNotifierServiceSpecyfication")]
+[assembly: AssemblyTitle("ConsoleFileWatcherService")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("FileNotifierServiceSpecyfication")]
+[assembly: AssemblyProduct("ConsoleFileWatcherService")]
 [assembly: AssemblyCopyright("Copyright © Microsoft 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("0f8aa753-a81b-4782-9135-5a40982b64c8")]
+[assembly: Guid("c8a79e3f-2821-438c-9dbe-dd0e65202b3b")]
 
 // Version information for an assembly consists of the following four values:
 //
