@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleFileWatcherService",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebFileNotifier", "WebFileNotifier\WebFileNotifier.csproj", "{F1637E49-5D62-433B-9A56-1A706F7E571F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityPlugin", "EntityPlugin\EntityPlugin.csproj", "{AA526918-1DB3-4BD1-9492-34FE7C7B40A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebFileManager", "WebFileManager\WebFileManager.csproj", "{8B426E9F-0957-49D2-B958-8364F555E2EA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,14 @@ Global
 		{F1637E49-5D62-433B-9A56-1A706F7E571F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1637E49-5D62-433B-9A56-1A706F7E571F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1637E49-5D62-433B-9A56-1A706F7E571F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA526918-1DB3-4BD1-9492-34FE7C7B40A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA526918-1DB3-4BD1-9492-34FE7C7B40A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA526918-1DB3-4BD1-9492-34FE7C7B40A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA526918-1DB3-4BD1-9492-34FE7C7B40A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B426E9F-0957-49D2-B958-8364F555E2EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B426E9F-0957-49D2-B958-8364F555E2EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B426E9F-0957-49D2-B958-8364F555E2EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B426E9F-0957-49D2-B958-8364F555E2EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

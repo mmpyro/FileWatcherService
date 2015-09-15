@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>@ViewBag.Title</title>
+        <link rel="stylesheet" href=@Url.Content("Content/bootstrap.css") type="text/css"/>
+    </head>
+    <body class="container" style="background: dimgray">
+        <header>
+            <nav class="nav">
+                <ul class="navbar navbar-inverse">
+                    <a class="navbar-brand">Home</a>
+                    <a class="navbar-brand">Manager</a>
+                    <a class="navbar-brand">History</a>
+                </ul>
+            </nav>
+            @RenderSection("featured", false)
+        </header>
+        <div id="content">
+            @RenderBody()
+        </div>
+        <footer class="panel-footer" style="background: cadetblue">
+            <strong>&copy; @DateTime.Now.Year FileNotifier 2015</strong>
+        </footer>
+    </body>
+</html>

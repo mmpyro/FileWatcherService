@@ -7,8 +7,11 @@ using FileWatcherService;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;
 using Microsoft.Owin.Hosting;
+using EntityPlugin;
 using NLog;
 using Owin;
+
+
 
 namespace ConsoleFileWatcherService
 {
@@ -24,7 +27,7 @@ namespace ConsoleFileWatcherService
             {
                 _logger = LogManager.GetCurrentClassLogger();
                 FileObserver.CreateFunction = (dto, notifier) => new FileWatchDog(dto, notifier);
-                _fileManager = new FileNotifierManager(new SignalRNotifier(),new ConsoleNotifier(_logger));
+                _fileManager = new FileNotifierManager(new FileEntity(),new SignalRNotifier(), new ConsoleNotifier(_logger));
                 _fileManager.Set(new ObserveFileDto(@"D:\test\"));
                 using (WebApp.Start(URL))
                 {
@@ -35,6 +38,7 @@ namespace ConsoleFileWatcherService
             catch (Exception e)
             {
                 _logger.Error(e);
+                Console.WriteLine(e);
             }
             finally
             {
