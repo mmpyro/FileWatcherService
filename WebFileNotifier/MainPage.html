@@ -30,6 +30,16 @@
                 notifier.server.getObservedPaths();
             });
 
+            $("#btn2").click(function() {
+                notifier.server.removeObservedPath($('#path').val());
+            });
+
+            $("#btn3").click(function () {
+                var obj = { directoryPath: $('#path').val(), filter: "*.*", withSubDirectories: true };
+                console.log(obj);
+                notifier.server.addFileToObserverPath(JSON.stringify(obj));
+            });
+
             $.connection.hub.start().done(function () {
                 console.log("connected");
                 $('#status').html('connected');
@@ -40,7 +50,10 @@
     <body class="container">
         <strong>Status: </strong><span id="status"></span>
         <div id="tableDocker"></div> 
+        <input type="text" id="path"/>
         <button class="btn-primary" id="btn1">GetPaths</button>
+        <button class="btn-primary" id="btn2">Delete</button>
+        <button class="btn-primary" id="btn3">Add</button>
         <ul class="list-group" id="list"></ul>
     </body>
 </html>
