@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using FileNotifier;
-using FileWatcherService;
+using FileWatcher;
 using NUnit.Framework;
 
 namespace FileNotifierSpecyfication

@@ -2,7 +2,7 @@ using FileWatcher;
 using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
 
-namespace ConsoleFileWatcherService
+namespace FileNotifierService
 {
     public class FileNotifierHub : Hub
     {

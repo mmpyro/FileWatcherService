@@ -57,8 +57,8 @@
       <Project>{dc041f0a-cd01-47b3-b511-8e979a581bdb}</Project>
       <Name>FileNotifier</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FileWatcherService\FileWatcher.csproj">
-      <Project>{15b3e0d2-6217-493a-a690-158c497f5318}</Project>
+    <ProjectReference Include="..\FileWatcher\FileWatcher.csproj">
+      <Project>{15B3E0D2-6217-493A-A690-158C497F5318}</Project>
       <Name>FileWatcher</Name>
     </ProjectReference>
   </ItemGroup>
