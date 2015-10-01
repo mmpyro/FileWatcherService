@@ -1,5 +1,6 @@
 using FileWatcherService;
 using Microsoft.AspNet.SignalR;
+using Newtonsoft.Json;
 
 namespace ConsoleFileWatcherService
 {
@@ -15,6 +16,17 @@ namespace ConsoleFileWatcherService
         public void GetObservedPaths()
         {
             Clients.Caller.GetObservedPaths(_fileNotifierManager.PerformFileList());
+        }
+
+        public void RemoveObservedPath(string path)
+        {
+            _fileNotifierManager.Remove(path);
+        }
+
+        public void AddFileToObserverPath(string json)
+        {
+            var fileDto = JsonConvert.DeserializeObject<ObserveFileDto>(json);
+            _fileNotifierManager.Set(fileDto);
         }
 
         public void Send(string message)
