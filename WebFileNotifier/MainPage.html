@@ -7,35 +7,52 @@
     <script src="http://localhost:8080/signalr/hubs"></script>
     <link rel="stylesheet" href="Content/bootstrap.min.css"/>
     <script type="text/javascript">
-        $(function() {
+			var notifier = undefined;
+			var refresh = undefined;
+			
+			function removePath(value){
+				console.log(value);
+				notifier.server.removeObservedPath(value);
+				refresh();
+			}
+			
+	        $(function() {
             $.connection.hub.url = "http://localhost:8080/signalr";
-            var notifier = $.connection.fileNotifierHub;
+            notifier = $.connection.fileNotifierHub;
+
+            $.connection.hub.stateChanged(function (change) {
+                if (change.newState === $.signalR.connectionState.reconnecting) {
+                    $('#status').html('disconnected');
+                }
+                else if (change.newState === $.signalR.connectionState.connected) {
+                    $('#status').html('connected');
+                }
+            });
 
             notifier.client.notify = function(message) {
-                $('#list').append('<li class="list-group-item">'+message+'</li>');
+			    $('#list').append('<li class="list-group-item list-group-item-danger">'+message+'</li>');
             };
 
             notifier.client.getObservedPaths = function(data) {
                 console.log(data);
-                var table = '<table id="paths" class="table"><tr><th>Directory Path</th></tr></table>';
-                $('#tableDocker').html(table);
-                for (i = 0; i < data.length; i++) {
+				$('#paths').empty();
+                 for (i = 0; i < data.length; i++) {
                     var value = data[i].DirectoryPath;
                     console.log(value);
-                    $('#paths').append('<tr><td>'+value+'</td></tr>');
+                    $('#paths').append('<tr><td style="font-size: 15px; font-weight: bold;">'+value+'</td><td><button class="btn-primary" onclick="removePath(this.name)" name="'+value+'"><span class="glyphicon glyphicon-trash"></span></button></td></tr>');
                 }
             };
 
+			refresh = function(){
+				notifier.server.getObservedPaths();
+			};
+			
             $('#btn1').click(function() {
-                notifier.server.getObservedPaths();
+                refresh();
             });
 
-            $("#btn2").click(function() {
-                notifier.server.removeObservedPath($('#path').val());
-            });
-
-            $("#btn3").click(function () {
-                var obj = { directoryPath: $('#path').val(), filter: "*.*", withSubDirectories: true };
+            $("#btn2").click(function () {
+                var obj = { directoryPath: $('#path').val(), filter: $('#filter').val(), withSubDirectories: $('#recursive').prop('checked') };
                 console.log(obj);
                 notifier.server.addFileToObserverPath(JSON.stringify(obj));
             });
@@ -48,12 +65,30 @@
     </script>
 </head>
     <body class="container">
-        <strong>Status: </strong><span id="status"></span>
-        <div id="tableDocker"></div> 
-        <input type="text" id="path"/>
-        <button class="btn-primary" id="btn1">GetPaths</button>
-        <button class="btn-primary" id="btn2">Delete</button>
-        <button class="btn-primary" id="btn3">Add</button>
+		<nav class="navbar">
+			<strong>Status: </strong><span id="status"></span>
+		</nav>
+		<table  class="table">
+		<thead>
+			<tr><th>Directory Path</th><th><button class="btn-primary" id="btn1"><span class="glyphicon glyphicon-repeat"></span></button></th></tr>
+		</thead>
+		<tbody id="paths"></tbody>
+		</table>
+
+		<table style="margin-top: 20px" class="table">
+			<tr>
+				<th>Path</th>
+				<th>Filtr</th>
+				<th>Recursive</th>
+			</tr>
+			<tr>
+				<td><input type="text" id="path"/></td>
+				<td><input type="text" id="filter" value="*.*"/></td>
+				<td><input type="checkbox" id="recursive"/></td>
+			</tr>
+		</table>
+        <button style="margin-bottom: 10px" class="btn-primary" id="btn2"><span class="glyphicon glyphicon-plus-sign"></span></button>
         <ul class="list-group" id="list"></ul>
+		<footer class="footer"><strong>FileNotifier Manager 2015</strong></footer>
     </body>
 </html>
