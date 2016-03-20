@@ -1,5 +1,4 @@
-﻿using FileNotifier;
-using FileWatcher;
+﻿using FileWatcher;
 using FileWatcherService.Core;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;
@@ -7,9 +6,7 @@ using Microsoft.Owin.Hosting;
 using NLog;
 using Owin;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.IO;
 
 namespace FileWatcherService
 {
@@ -23,7 +20,7 @@ namespace FileWatcherService
         {
             _logger = logger;
             FileObserver.CreateFunction = (dto, notifier) => new FileWatchDog(dto, notifier);
-            var fileManager = new FileNotifierManager(CreateNotifierList());
+            var fileManager = new FileNotifierManager(new SignalRNotifier());
             GlobalHost.DependencyResolver.Register(typeof(FileNotifierHub), () => new FileNotifierHub(fileManager));
         }
 
@@ -38,17 +35,7 @@ namespace FileWatcherService
         {
             if (_webApp != null)
                 _webApp.Dispose();
-        }
-
-        private IFileNotifier[] CreateNotifierList()
-        {
-            PluginManager pluginManager = new PluginManager(Path.Combine(Directory.GetCurrentDirectory(), "Plugins"));
-            List<IFileNotifier> notifiersList = new List<IFileNotifier>();
-            notifiersList.Add(new SignalRNotifier());
-            notifiersList.AddRange(pluginManager.GetPlugins());
-            return notifiersList.ToArray();
-        }
-        
+        }        
     }
 
     class Startup
