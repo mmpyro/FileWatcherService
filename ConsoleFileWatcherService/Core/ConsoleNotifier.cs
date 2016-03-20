@@ -2,7 +2,7 @@
 using FileNotifier;
 using NLog;
 
-namespace ConsoleFileWatcherService
+namespace FileWatcherService.Core
 {
     internal class ConsoleNotifier : IFileNotifier
     {

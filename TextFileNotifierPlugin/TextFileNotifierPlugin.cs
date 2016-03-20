@@ -13,7 +13,7 @@ namespace TextFileNotifierPlugin
         public TextFileNotifierPlugin()
         {
             var dt = DateTime.Now;
-            _fileName = Path.Combine(Path.GetTempPath(), "Notifierlog.txt");
+            _fileName = @"E:\Notifierlog.txt";
         }
 
         public void OnCreated(FileSystemEventArgs arg)

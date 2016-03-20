@@ -3,7 +3,7 @@ using System.IO;
 using FileNotifier;
 using Microsoft.AspNet.SignalR;
 
-namespace FileNotifierService
+namespace FileWatcherService.Core
 {
     internal class SignalRNotifier : IFileNotifier
     {

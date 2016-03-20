@@ -2,13 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>FileNotifier</title>
-    <script src="Scripts/jquery-1.9.0.min.js"></script>
+    <script src="Scripts/jquery-1.9.1.min.js"></script>
     <script src="Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="Scripts/bootstrap.min.js"></script>
     <script src="http://localhost:8080/signalr/hubs"></script>
     <link rel="stylesheet" href="Content/bootstrap.min.css"/>
+    <link rel="stylesheet" href="Content/bootstrap-theme.min.css" />
     <script type="text/javascript">
 			var notifier = undefined;
 			var refresh = undefined;
+			var numberOfItems = 0;
+			if (!String.prototype.contains) {
+			    String.prototype.contains = function (value) {
+			        return this.indexOf(value) != -1;
+			    };
+			}
 			
 			function removePath(value){
 				console.log(value);
@@ -19,18 +27,37 @@
 	        $(function() {
             $.connection.hub.url = "http://localhost:8080/signalr";
             notifier = $.connection.fileNotifierHub;
+            var currentYear = (new Date()).getFullYear();
+            $('#footer').html('FileNotifier Manager '+currentYear);
 
             $.connection.hub.stateChanged(function (change) {
                 if (change.newState === $.signalR.connectionState.reconnecting) {
-                    $('#status').html('disconnected');
+                    $('#status')
+                        .html('disconnected')
+                        .css('color', 'red');
                 }
                 else if (change.newState === $.signalR.connectionState.connected) {
-                    $('#status').html('connected');
+                    $('#status')
+                        .html('connected')
+                        .css('color', 'yellowgreen');
                 }
             });
 
-            notifier.client.notify = function(message) {
-			    $('#list').append('<li class="list-group-item list-group-item-danger">'+message+'</li>');
+            notifier.client.notify = function (message) {
+                if (numberOfItems > 20) {
+                    numberOfItems = 0;
+                    $('#list').html('');
+                }
+                if (message.contains('Created')) {
+                    $('#list').append('<li class="list-group-item list-group-item-success">' + message + '</li>');
+                    numberOfItems++;
+                } else if (message.contains('Renamed')) {
+                    $('#list').append('<li class="list-group-item list-group-item-warning">' + message + '</li>');
+                    numberOfItems++;
+                } else if (message.contains('Deleted')) {
+                    $('#list').append('<li class="list-group-item list-group-item-danger">' + message + '</li>');
+                    numberOfItems++;
+                }
             };
 
             notifier.client.getObservedPaths = function(data) {
@@ -47,11 +74,11 @@
 				notifier.server.getObservedPaths();
 			};
 			
-            $('#btn1').click(function() {
+			$('#refreshBtn').click(function () {
                 refresh();
             });
 
-            $("#btn2").click(function () {
+			$("#addBtn").click(function () {
                 var obj = { directoryPath: $('#path').val(), filter: $('#filter').val(), withSubDirectories: $('#recursive').prop('checked') };
                 console.log(obj);
                 notifier.server.addFileToObserverPath(JSON.stringify(obj));
@@ -60,21 +87,21 @@
             $.connection.hub.start().done(function () {
                 console.log("connected");
                 $('#status').html('connected');
+                $('#status').css('color', 'yellowgreen');
             });
         });
     </script>
 </head>
     <body class="container">
 		<nav class="navbar">
-			<strong>Status: </strong><span id="status"></span>
+			<strong>Status: </strong><span style="color: yellowgreen;" id="status"></span>
 		</nav>
 		<table  class="table">
 		<thead>
-			<tr><th>Directory Path</th><th><button class="btn-primary" id="btn1"><span class="glyphicon glyphicon-repeat"></span></button></th></tr>
+			<tr><th>Directory Path</th><th><button class="btn-primary" id="refreshBtn"><span class="glyphicon glyphicon-repeat"></span></button></th></tr>
 		</thead>
 		<tbody id="paths"></tbody>
 		</table>
-
 		<table style="margin-top: 20px" class="table">
 			<tr>
 				<th>Path</th>
@@ -82,13 +109,13 @@
 				<th>Recursive</th>
 			</tr>
 			<tr>
-				<td><input type="text" id="path"/></td>
-				<td><input type="text" id="filter" value="*.*"/></td>
-				<td><input type="checkbox" id="recursive"/></td>
+				<td><input name="path" type="text" id="path"/></td>
+				<td><input name="filter" type="text" id="filter" value="*.*"/></td>
+				<td><input name="recursiveCheckBox" type="checkbox" id="recursive"/></td>
 			</tr>
 		</table>
-        <button style="margin-bottom: 10px" class="btn-primary" id="btn2"><span class="glyphicon glyphicon-plus-sign"></span></button>
+        <button style="margin-bottom: 10px" class="btn-primary" id="addBtn"><span class="glyphicon glyphicon-plus-sign"></span></button>
         <ul class="list-group" id="list"></ul>
-		<footer class="footer"><strong>FileNotifier Manager 2015</strong></footer>
+		<footer id="footer" style="font-weight: bold;" class="footer"></footer>
     </body>
 </html>

@@ -28,14 +28,19 @@ namespace FileNotifierSpecyfication
     [TestFixture]
     public class ObserverFileBoxSpecification
     {
-        const string FilePath = @"D:\test\myTestFile.dat";
+        string mainDir = Path.Combine(Path.GetTempPath(), "test");
+        string FilePath = Path.Combine(Path.Combine(Path.GetTempPath(), "test"), "myTestFile.dat");
         const int Delay = 1000;
-        const string SubDirPath = @"D:\test\subdir";
+        string SubDirPath = Path.Combine(Path.GetTempPath(), "subdir");
 
         [TestFixtureSetUp]
         public void Init()
         {
             FileObserver.CreateFunction = (dto, notifier) => new FileWatchDog(dto,notifier );
+            if (!Directory.Exists(mainDir))
+            {
+                Directory.CreateDirectory(mainDir);
+            }
             if (!Directory.Exists(SubDirPath))
             {
                 Directory.CreateDirectory(SubDirPath);
@@ -50,7 +55,7 @@ namespace FileNotifierSpecyfication
             var fileNotifier = new FakeNotifier();
             var fileToObserve = new ObserveFileDto()
             {
-                DirectoryPath = @"D:\test",
+                DirectoryPath = mainDir,
                 Filter = "*.*",
                 WithSubDirectories = false
             };
@@ -70,7 +75,7 @@ namespace FileNotifierSpecyfication
             var fileNotifier = new FakeNotifier();
             var fileToObserve = new ObserveFileDto()
             {
-                DirectoryPath = @"D:\test",
+                DirectoryPath = mainDir,
                 Filter = "*.*",
                 WithSubDirectories = false
             };
@@ -91,7 +96,7 @@ namespace FileNotifierSpecyfication
             var fileNotifier = new FakeNotifier();
             var fileToObserve = new ObserveFileDto()
             {
-                DirectoryPath = @"D:\test",
+                DirectoryPath = mainDir,
                 Filter = "*.*",
                 WithSubDirectories = false
             };
@@ -112,7 +117,7 @@ namespace FileNotifierSpecyfication
             var fileNotifier = new FakeNotifier();
             var fileToObserve = new ObserveFileDto()
             {
-                DirectoryPath = @"D:\test",
+                DirectoryPath = mainDir,
                 Filter = "*.*",
                 WithSubDirectories = false
             };
@@ -120,7 +125,7 @@ namespace FileNotifierSpecyfication
             //When
             fileNotifierManager.Set(fileToObserve);
             File.Create(FilePath).Close();
-            const string newfileName = @"D:\test\newFileName.txt";
+            string newfileName = Path.Combine(mainDir, "newFileName.txt");
             File.Move(FilePath, newfileName);
             DeleteIfExist(newfileName);
             //Then
@@ -135,7 +140,7 @@ namespace FileNotifierSpecyfication
             var fileNotifier = new FakeNotifier();
             var fileToObserve = new ObserveFileDto()
             {
-                DirectoryPath = @"D:\test",
+                DirectoryPath = mainDir,
                 Filter = "*.*",
                 WithSubDirectories = true
             };
@@ -156,7 +161,7 @@ namespace FileNotifierSpecyfication
             var fileNotifier = new FakeNotifier();
             var fileToObserve = new ObserveFileDto()
             {
-                DirectoryPath = @"D:\test",
+                DirectoryPath = mainDir,
                 Filter = "*.*",
                 WithSubDirectories = false
             };
@@ -179,9 +184,9 @@ namespace FileNotifierSpecyfication
         [TestFixtureTearDown]
         public void Clear()
         {
-            if (Directory.Exists(SubDirPath))
+            if (Directory.Exists(mainDir))
             {
-                Directory.Delete(SubDirPath, true);
+                Directory.Delete(mainDir, true);
             }
         }
 

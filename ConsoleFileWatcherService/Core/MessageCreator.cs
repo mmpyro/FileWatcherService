@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace ConsoleFileWatcherService
+namespace FileWatcherService.Core
 {
     public static class MessageCreator
     {

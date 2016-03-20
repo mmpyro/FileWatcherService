@@ -1,57 +1,42 @@
 ﻿using System;
-using System.Threading.Tasks;
-using FileWatcher;
-using Microsoft.AspNet.SignalR;
-using Microsoft.Owin.Cors;
-using Microsoft.Owin.Hosting;
 using NLog;
-using Owin;
+using Topshelf;
 
-
-
-namespace ConsoleFileWatcherService
+namespace FileWatcherService
 {
     class Program
     {
-        private static Logger _logger;
-        public static FileNotifierManager _fileManager;
-        private const string URL = "http://localhost:8080";
-
         static void Main(string[] args)
         {
+            Logger logger = null;
             try
             {
-                _logger = LogManager.GetCurrentClassLogger();
-                FileObserver.CreateFunction = (dto, notifier) => new FileWatchDog(dto, notifier);
-                _fileManager = new FileNotifierManager(new SignalRNotifier(), new ConsoleNotifier(_logger));
-                _fileManager.Set(new ObserveFileDto(@"D:\test\"));
-                using (WebApp.Start(URL))
+                logger = LogManager.GetCurrentClassLogger();
+                HostFactory.Run(serviceConfig =>
                 {
-                    _logger.Info("Service started");
-                    Console.ReadKey();
-                }
+                    serviceConfig.Service<FileWatcherService>(serviceInstance =>
+                    {
+                        serviceInstance.ConstructUsing(() => new FileWatcherService(logger));
+                        serviceInstance.WhenStarted(service => service.StartService());
+                        serviceInstance.WhenStopped(service => service.StopService());
+                    });
+                    serviceConfig.EnableServiceRecovery(recovery =>
+                    {
+                        recovery.RestartService(1);
+                        recovery.RestartService(1);
+                        recovery.RestartService(1);
+                    });
+                    serviceConfig.SetServiceName("FileWatcherService");
+                    serviceConfig.SetDisplayName("FileWatcherService");
+                    serviceConfig.SetDescription("Service for watching files");
+                    serviceConfig.StartAutomatically();
+                });
             }
             catch (Exception e)
             {
-                _logger.Error(e);
-                Console.WriteLine(e);
+                if(logger != null)
+                    logger.Error(e);
             }
-            finally
-            {
-                _logger.Info("Service stoped");
-                Console.WriteLine("Press any key ...");
-                Console.ReadKey();
-            }
-        }
-    }
-
-    class Startup
-    {
-        public void Configuration(IAppBuilder app)
-        {
-            GlobalHost.DependencyResolver.Register(typeof(FileNotifierHub), () => new FileNotifierHub(Program._fileManager) );
-            app.UseCors(CorsOptions.AllowAll);
-            app.MapSignalR();
         }
     }
 }

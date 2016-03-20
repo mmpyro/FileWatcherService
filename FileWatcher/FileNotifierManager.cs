@@ -8,14 +8,14 @@ namespace FileWatcher
     public class FileNotifierManager : IFileNotifierManager
     {
         private readonly IFileNotifier[] _fileNotifier;
+        private readonly Dictionary<ObserveFileDto, IFileObserver> _observedFiles;
+        private List<IFileNotifier> notifiersList;
 
         public FileNotifierManager(params IFileNotifier[] fileNotifier)
         {
             _fileNotifier = fileNotifier;
             _observedFiles = new Dictionary<ObserveFileDto, IFileObserver>();
         }
-
-        private readonly Dictionary<ObserveFileDto, IFileObserver> _observedFiles;
 
         public void Set(ObserveFileDto fileToObserve)
         {
